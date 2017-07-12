@@ -1,5 +1,6 @@
 var Vue = require('vue')
 var VueRouter = require('vue-router')
+var VueResource = require('vue-resource')
 
 var App = require('./App')
 var AddItem = require('./components/epam_prac/AddItem')
@@ -8,7 +9,7 @@ var Cart = require('./components/epam_prac/Cart')
 var MyItems = require('./components/epam_prac/MyItems')
 
 Vue.use(VueRouter)
-Vue.use(require('vue-resource'))
+Vue.use(VueResource)
 
 var router = new VueRouter()
 

@@ -45,16 +45,6 @@
     </div>   
 </template>
 
-<script>
-  module.exports = {
-    data: function () {
-      return {
-        msg: 'Hello VUE!'
-      }
-    }
-}
-</script>
-
 <style>
     div #add_item {
         padding: 10px;
