@@ -1,5 +1,7 @@
 <template>
-    <div id="all_items"></div> 
+    <div id="all_items">
+        
+    </div> 
 </template>
 
 
