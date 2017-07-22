@@ -7,27 +7,34 @@
                 <th>Price</th>
                 <th>Buyer</th>
             </tr>
-            <tr>
-                <td>item10</td>
-                <td>item10 desc</td>
-                <td>1500</td>
-                <td>kirya</td>
-            </tr>
-            <tr>
-                <td>item22</td>
-                <td>item22 desc</td>
-                <td>1000</td>
-                <td>ksu</td>
-            </tr>
-            <tr v-for="item in items">
-                <td>{{ item.title }}</td>                
+            <tr v-for="item in myitems">
+                <td>{{ item.name }}</td>                
                 <td>{{ item.description }}</td>                
-                <td>{{ item.price }}</td>                
-                <td>{{ item.buyer }}</td>
+                <td>{{ item.price }}</td>                    
+                <td>{{ item.buyer.login }}</td>
             </tr>
         </table>
     </div>   
 </template>
+
+<script>
+module.exports = {
+  data: function () {
+    return {
+      myitems: []
+    }
+  },
+
+  ready: function () {
+    this.$http({url: 'http://localhost:9000/epam/myitems', method: 'GET'}).then(function (response) {
+      console.log(response)
+      this.$set('myitems', response.data)
+    }, function (response) {
+      console.log(response)
+    })
+  }
+}
+</script>
 
 <style>
     #my_items {

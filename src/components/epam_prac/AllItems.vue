@@ -6,32 +6,48 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Seller</th>
-                <th align="middle"><input type="submit" value="Buy"/></th>
+                <th align="middle"><input type="submit" value="Buy" @click="buy"/></th>
             </tr>
-            <tr>
-                <td>item145</td>
-                <td>item145 desc</td>
-                <td>3000</td>
-                <td>liza</td>
-                <td align="middle"><input type="checkbox" name="checkbox_id" value="{{ item.id }}"></td>
-            </tr>
-            <tr>
-                <td>item12</td>
-                <td>item12 desc</td>
-                <td>10000</td>
-                <td>masha</td>
-                <td align="middle"><input type="checkbox" name="checkbox_id" value="{{ item.id }}"></td>
-            </tr>
-            <tr v-for="item in items">
-                <td>{{ item.title }}</td>                
+            <tr v-for="item in allitems">
+                <td>{{ item.name }}</td>                
                 <td>{{ item.description }}</td>                
                 <td>{{ item.price }}</td>                
-                <td>{{ item.seller }}</td>
-                <td align="middle"><input type="checkbox" name="checkbox_id" value="{{ item.id }}"></td>
+                <td>{{ item.seller.login }}</td>
+                <td><input type="checkbox" name="checkbox_id" value="{{ item.id }}" v-model="checkboxValues"></td>
             </tr>
         </table>
-    </div> 
+    </div>
 </template>
+
+<script>
+module.exports = {
+  data: function () {
+    return {
+      allitems: [],
+      checkboxValues: [],
+      postResults: []
+    }
+  },
+  methods: {
+    buy: function () {
+      this.$http.post('http://localhost:9000/epam/buy', {checkboxValues: this.checkboxValues},
+        function (data, status, request) {
+          this.postResults = data
+          console.log(request)
+          this.$route.router.go('/cart')
+        })
+    }
+  },
+  ready: function () {
+    this.$http({url: 'http://localhost:9000/epam/allitems', method: 'GET'}).then(function (response) {
+      console.log(response)
+      this.$set('allitems', response.data)
+    }, function (response) {
+      console.log(response)
+    })
+  }
+}
+</script>
 
 <style>
     #all_items {
@@ -65,6 +81,5 @@
         border-top: 1px solid black;
         font-family: sans-serif;
         font-size: 16px;
-    }
-    
+    }    
 </style>

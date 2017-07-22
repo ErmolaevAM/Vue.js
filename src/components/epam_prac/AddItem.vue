@@ -1,49 +1,61 @@
 <template>
     <div id="add_item">
-        <form action="#" id="add_item_form" method="post">
-            <table>
-                <tr>
-                    <td>
-                        <label for="item_title_input">+ Item title:</label>
-                    </td>
-                    <td>
-                        <input type="text" id="item_title_input">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="item_desc_input">+ Item description:</label>
-                    </td>
-                    <td>
-                        <input type="text" id="item_desc_input">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="item_seller_input">+ Item seller:</label>
-                    </td>
-                    <td>
-                        <input type="text" id="item_seller_input">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="item_price_input">+ Item price:</label>
-                    </td>
-                    <td>
-                        <input type="number" id="item_price_input" min="0" step="5">
-                    </td>
-                </tr>
-                <tr>
-                   <td colspan="2">
-                       <input type="submit" value="Add item" class="item_submit_btn">
-                   </td>
-                </tr>
-            </table>
-            
-        </form>
+        <table>
+            <tr>
+                <td>
+                    <label for="item_title_input">+ Item title:</label>
+                </td>
+                <td>
+                    <input type="text" id="item_title_input" v-model="itemTitle">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="item_desc_input">+ Item description:</label>
+                </td>
+                <td>
+                    <input type="text" id="item_desc_input" v-model="itemDescription">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="item_price_input">+ Item price:</label>
+                </td>
+                <td>
+                    <input type="number" id="item_price_input" min="0" step="5" v-model="itemPrice">
+                </td>
+            </tr>
+            <tr>
+               <td colspan="2">
+                   <input type="button" value="Add item" class="item_submit_btn" @click="addItem">
+               </td>
+            </tr>
+        </table>
     </div>   
 </template>
+
+<script>
+module.exports = {
+  data: function () {
+    return {
+      itemTitle: '',
+      itemDescription: '',
+      itemPrice: '',
+      postResults: []
+    }
+  },
+  methods: {
+    addItem: function () {
+      this.$http.post('http://localhost:9000/epam/add', {itemTitle: this.itemTitle, itemDescription: this.itemDescription, itemPrice: this.itemPrice},
+        function (data, status, request) {
+          this.postResults = data
+          console.log(request)
+          this.$route.router.go('/allitems')
+        })
+    }
+  }
+}
+</script>
 
 <style>
     div #add_item {
@@ -53,7 +65,7 @@
         border-radius: 10px;
     }
     
-    div #add_item form table {
+    div #add_item table {
         margin: auto;
     }
     

@@ -7,27 +7,34 @@
                 <th>Price</th>
                 <th>Seller</th>
             </tr>
-            <tr>
-                <td>item1</td>
-                <td>item1 desc</td>
-                <td>500</td>
-                <td>igor</td>
-            </tr>
-            <tr>
-                <td>item2</td>
-                <td>item2 desc</td>
-                <td>1000</td>
-                <td>ivan</td>
-            </tr>
-            <tr v-for="item in items">
-                <td>{{ item.title }}</td>                
+            <tr v-for="item in cart">
+                <td>{{ item.name }}</td>                
                 <td>{{ item.description }}</td>                
                 <td>{{ item.price }}</td>                
-                <td>{{ item.seller }}</td>
+                <td>{{ item.seller.login }}</td>
             </tr>
         </table>
     </div>
 </template>
+
+<script>
+module.exports = {
+  data: function () {
+    return {
+      cart: []
+    }
+  },
+
+  ready: function () {
+    this.$http({url: 'http://localhost:9000/epam/cart', method: 'GET'}).then(function (response) {
+      console.log(response)
+      this.$set('cart', response.data)
+    }, function (response) {
+      console.log(response)
+    })
+  }
+}
+</script>
 
 <style>
     #cart {

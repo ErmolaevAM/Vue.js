@@ -9,6 +9,8 @@
             <a v-link="{ path: '/myitems' }">+ My items</a>
             <a v-link="{ path: '/cart' }">+ My cart</a>
             <a v-link="{ path: '/add' }">+ Add item</a>
+            <a v-link="{ path: '/registration' }">+ Registration</a>
+            <a v-link="{ path: '/' }" @click="logoutFunction">- Logout</a>
         </div>
     </header>
 
@@ -26,6 +28,12 @@
     module.exports = {
       components: {
         hello: Hello
+      },
+      methods: {
+        logoutFunction: function () {
+          this.$http.post('http://localhost:9000/epam/logout', {},
+            function (data, status, request) {})
+        }
       }
     }
 </script>
